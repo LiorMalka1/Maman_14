@@ -1,0 +1,60 @@
+#include <stdio.h>
+#include <math.h>
+
+// Function to convert binary to decimal
+int binaryToDecimal(int binary[], int size) {
+    int decimal = 0;
+    int i;
+    for (i = 0; i < size; i++) {
+        decimal += binary[i] * pow(2, size - i - 1);
+    }
+    return decimal;
+}
+
+// Function to convert decimal to base 4 and encode the output
+void decimalToBase4AndEncode(int decimal) {
+    int base4[5]; // Since 4^5 > 2^14, it's enough for the result to have 5 digits in base 4
+    int i = 0;
+    while (decimal > 0) {
+        base4[i] = decimal % 4;
+        decimal /= 4;
+        i++;
+    }
+    printf("Encoded number in base 4: ");
+    for (int j = i - 1; j >= 0; j--) {
+        switch(base4[j]) {
+            case 0:
+                printf("*");
+                break;
+            case 1:
+                printf("#");
+                break;
+            case 2:
+                printf("%%");
+                break;
+            case 3:
+                printf("!");
+                break;
+        }
+    }
+    printf("\n");
+}
+
+int main() {
+    int binary[14];
+    
+    // Getting binary input from the user
+    printf("Enter a binary word (14 bits): ");
+    for (int i = 0; i < 14; i++) {
+        scanf("%1d", &binary[i]);
+    }
+
+    // Converting binary to decimal
+    int decimal = binaryToDecimal(binary, 14);
+    
+    // Converting decimal to base 4, encoding the output and printing the result
+    decimalToBase4AndEncode(decimal);
+
+    return 0;
+}
+
